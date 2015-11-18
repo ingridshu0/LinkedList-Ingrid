@@ -15,6 +15,13 @@ public class LinkedList<E> /*implements Stack<E> && Queue<E>*/ {
 	
 	public boolean add(E i)
 	{
+		add(size, i);
+		
+		if(tail.getNext() == i)
+		{
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -32,13 +39,15 @@ public class LinkedList<E> /*implements Stack<E> && Queue<E>*/ {
 		
 		else
 		{
-			for(int counter = 0; counter < index; counter++)
+			int counter = 0;
+			
+			for(ListNode<E> cur = head.getNext(); cur != null; cur = cur.getNext())
 			{
-				head = head.getNext();
 				
-				if(counter ==  index)
+				if(counter == index - 1)
 				{
-					head.setNext(newNode);
+					newNode.setNext(cur.getNext());
+					cur.setNext(newNode);
 					size++;
 					
 					if(index == size - 1)
@@ -46,9 +55,23 @@ public class LinkedList<E> /*implements Stack<E> && Queue<E>*/ {
 						tail = newNode;
 					}
 				}
+				counter++;
 			}
 		}
+				
+	}
+	
+	public String toString()
+	{
+		String s = "";
+				
+		for(ListNode<E> i = head.getNext(); i != null; i = i.getNext())
+		{
+			s += i.toString();
+			s += ", ";
+		}
 		
+		return s;
 	}
 
 }
